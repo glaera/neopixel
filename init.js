@@ -1,5 +1,24 @@
+load('api_config.js');
+load('api_events.js');
+load('api_gpio.js');
+load('api_mqtt.js');
+load('api_net.js');
+load('api_sys.js');
 load('api_timer.js');
 load('api_neopixel.js');
+load('api_rpc.js');
+
+
+RPC.addHandler('SetAll', function(args) {
+  setAll(args.r,args.g,args.b);
+  showStrip();
+  return "done";
+});
+
+RPC.addHandler('Clear', function(args) {
+  strip.clear();
+  return "done";
+});
 
 let pin = 5, numPixels = 20, colorOrder = NeoPixel.GRB, i = 0;
 let strip = NeoPixel.create(pin, numPixels, colorOrder);
@@ -213,7 +232,7 @@ function theaterChase(red, green, blue, SpeedDelay) {
 
 
 
-strip.clear();
+//strip.clear();
 //RunningLights(0xff,0xff,0x00, 50);
 
 //SnowSparkle(0x10, 0x10, 0x10, 20, Math.random(1000)+100);
@@ -223,3 +242,5 @@ strip.clear();
 
 //colorWipe(0x00,0xff,0x00, 50);
 //colorWipe(0x00,0x00,0x00, 50);
+
+
