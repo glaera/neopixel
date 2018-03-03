@@ -229,7 +229,29 @@ function theaterChase(red, green, blue, SpeedDelay) {
   }
 }
 
-
+let topicPixel = 'glaera' + '/feeds/pixel/json'; ;
+MQTT.sub(topicPixel, function(conn, topic, msg) {
+  print('Teceived Topic:', topic, 'message:', msg);
+  let jmsg = JSON.parse(msg);
+  let r=0,g=0,b=0;
+  if (jmsg.last_value === 'red')
+  {
+    r = 255;
+  } else 
+  if (jmsg.last_value === 'pink')
+  {
+    r = 255;g=105;b=180;
+  }
+  else 
+  if (jmsg.last_value === 'blue')
+  {
+    b=255;
+  }
+  
+  
+  setAll(r,g,b);
+  
+}, null);
 
 
 //strip.clear();
@@ -242,5 +264,6 @@ function theaterChase(red, green, blue, SpeedDelay) {
 
 //colorWipe(0x00,0xff,0x00, 50);
 //colorWipe(0x00,0x00,0x00, 50);
+
 
 
