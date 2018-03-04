@@ -7,7 +7,7 @@ load('api_sys.js');
 load('api_timer.js');
 load('api_neopixel.js');
 load('api_rpc.js');
-
+load('utils.js');
 
 RPC.addHandler('SetAll', function(args) {
   setAll(args.r,args.g,args.b);
@@ -242,16 +242,14 @@ MQTT.sub(topicPixel, function(conn, topic, msg) {
   {
     r = 255;g=105;b=180;
   }
-  else 
-  if (jmsg.last_value === 'blue')
-  {
-    b=255;
+  let color = toRGB(jmsg.last_value);
+  if (color) {
+    r = color.r;g=color.g;b=color.b;
   }
-  
-  
   setAll(r,g,b);
   
 }, null);
+
 
 
 //strip.clear();
